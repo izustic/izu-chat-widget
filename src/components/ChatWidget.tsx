@@ -286,9 +286,10 @@ function injectStyles(primaryColor: string) {
       padding: 10px 14px;
       border-radius: 18px;
       font-size: 14px;
-      line-height: 1.5;
+      line-height: 1.6;
       box-shadow: 0 1px 3px rgba(0,0,0,0.06);
       word-break: break-word;
+      white-space: pre-wrap;
     }
     .izu-widget__bubble-text--user {
       background: ${primaryColor};
@@ -490,6 +491,12 @@ function TypingDots() {
     </div>
   );
 }
+function renderMarkdown(text: string): string {
+  return text
+    .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+    .replace(/\*(.*?)\*/g, "<em>$1</em>")
+    .replace(/\n/g, "<br/>");
+}
 
 function MessageBubble({ msg }: { msg: DisplayMessage }) {
   const isUser = msg.role === "user";
@@ -503,7 +510,7 @@ function MessageBubble({ msg }: { msg: DisplayMessage }) {
       </div>
       <div className={`izu-widget__msg-body ${isUser ? "izu-widget__msg-body--user" : "izu-widget__msg-body--bot"}`}>
         <div className={`izu-widget__bubble-text ${isUser ? "izu-widget__bubble-text--user" : "izu-widget__bubble-text--bot"}`}>
-          {msg.isStreaming ? <TypingDots /> : msg.content}
+          {msg.isStreaming ? <TypingDots /> : <span dangerouslySetInnerHTML={{ __html: renderMarkdown(msg.content) }} />}
         </div>
         <span className="izu-widget__timestamp">{formatTime(msg.timestamp)}</span>
       </div>
