@@ -507,8 +507,6 @@ function injectStyles(primaryColor: string) {
     }
     #izu-chat-root * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
  
     .izu-widget__bubble {
@@ -575,7 +573,7 @@ function injectStyles(primaryColor: string) {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 14px 16px;
+      padding: 14px 16px !important;
       background: ${primaryColor};
       flex-shrink: 0;
     }
@@ -635,7 +633,7 @@ function injectStyles(primaryColor: string) {
     .izu-widget__messages {
       flex: 1;
       overflow-y: auto;
-      padding: 16px 14px;
+      padding: 16px 14px !important;
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -676,7 +674,7 @@ function injectStyles(primaryColor: string) {
     .izu-widget__msg-body--bot  { align-items: flex-start; }
  
     .izu-widget__bubble-text {
-      padding: 9px 13px;
+      padding: 9px 13px !important;
       border-radius: 16px;
       font-size: 13.5px;
       line-height: 1.55;
@@ -698,7 +696,7 @@ function injectStyles(primaryColor: string) {
     .izu-widget__bubble-text--bot strong { font-weight: 600; color: #0f172a; }
     .izu-widget__bubble-text--bot em { font-style: italic; }
     .izu-widget__bubble-text--bot ul {
-      padding-left: 16px;
+      padding-left: 16px !important;
       margin: 6px 0;
       list-style: disc;
     }
@@ -707,14 +705,14 @@ function injectStyles(primaryColor: string) {
     .izu-widget__timestamp {
       font-size: 10px;
       color: #94a3b8;
-      padding: 0 3px;
+      padding: 0 3px !important;
     }
  
     .izu-widget__typing-dots {
       display: inline-flex;
       align-items: center;
       gap: 4px;
-      padding: 3px 2px;
+      padding: 3px 2px !important;
     }
     .izu-widget__typing-dots span {
       width: 6px;
@@ -735,11 +733,11 @@ function injectStyles(primaryColor: string) {
       display: flex;
       flex-wrap: wrap;
       gap: 7px;
-      padding-top: 2px;
+      padding-top: 2px !important;
     }
     .izu-widget__suggestion {
       font-size: 12px;
-      padding: 5px 11px;
+      padding: 5px 11px !important;
       border-radius: 999px;
       background: #fff;
       border: 1px solid #e2e8f0;
@@ -775,7 +773,7 @@ function injectStyles(primaryColor: string) {
  
     .izu-widget__input-row {
       flex-shrink: 0;
-      padding: 10px 12px;
+      padding: 10px 12px !important;
       border-top: 1px solid #f1f5f9;
       background: #fff;
       display: flex;
@@ -786,7 +784,7 @@ function injectStyles(primaryColor: string) {
       flex: 1;
       resize: none;
       border-radius: 22px;
-      padding: 9px 14px;
+      padding: 9px 14px !important;
       font-size: 13.5px;
       background: #f1f5f9;
       border: 1.5px solid #e8edf2;
