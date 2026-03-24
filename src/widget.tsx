@@ -9,6 +9,19 @@ const container = document.createElement("div");
 container.id = "izu-chat-root";
 document.body.appendChild(container);
 
-createRoot(container).render(
-  <ChatWidget apiUrl={apiUrl} clientId={clientId} />
-);
+// createRoot(container).render(
+//   <ChatWidget apiUrl={apiUrl} clientId={clientId} />
+// );
+fetch(`${apiUrl}/config/${clientId}`)
+  .then(r => r.json())
+  .catch(() => ({}))
+  .then(config => {
+    // Now render with the actual config
+    createRoot(container).render(
+      <ChatWidget 
+        apiUrl={apiUrl} 
+        clientId={clientId} 
+        preloadedConfig={config}
+      />
+    );
+  });

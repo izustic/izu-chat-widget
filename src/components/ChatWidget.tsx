@@ -27,9 +27,14 @@ interface ClientConfig {
   dark_class?: string;
 }
 
+// interface Props {
+//   apiUrl: string;
+//   clientId: string;
+// }
 interface Props {
   apiUrl: string;
   clientId: string;
+  preloadedConfig?: Partial<ClientConfig>; // Add this
 }
 
 // ── Default config (fallback if /config fetch fails) ──────────────────────────
@@ -1043,8 +1048,13 @@ function MessageBubble({ msg }: { msg: DisplayMessage }) {
 //   );
 // }
 
-export default function ChatWidget({ apiUrl, clientId }: Props) {
-  const [config, setConfig] = useState<ClientConfig>(DEFAULT_CONFIG);
+// export default function ChatWidget({ apiUrl, clientId }: Props) {
+export default function ChatWidget({ apiUrl, clientId, preloadedConfig }: Props) {
+  // const [config, setConfig] = useState<ClientConfig>(DEFAULT_CONFIG);
+   const [config, setConfig] = useState<ClientConfig>(() => ({
+    ...DEFAULT_CONFIG,
+    ...preloadedConfig
+  }));
   const [isDark, setIsDark] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<DisplayMessage[]>([]);
@@ -1059,11 +1069,22 @@ export default function ChatWidget({ apiUrl, clientId }: Props) {
   const bottomRef = useRef<HTMLDivElement>(null);
  
   // ── Fetch config ───────────────────────────────────────────────────────────
+  // useEffect(() => {
+  //   fetch(`${apiUrl}/config/${clientId}`)
+  //     .then(r => r.json())
+  //     .then((data: ClientConfig) => setConfig({ ...DEFAULT_CONFIG, ...data }))
+  //     .catch(() => setConfig(DEFAULT_CONFIG));
+  // }, [apiUrl, clientId]);
+  // ── Fetch config updates if needed (in case we didn't have preloaded data) ──
   useEffect(() => {
+    // If we already have preloaded config with primary_color, we might skip fetch
+    // or still fetch to get other updates
     fetch(`${apiUrl}/config/${clientId}`)
       .then(r => r.json())
-      .then((data: ClientConfig) => setConfig({ ...DEFAULT_CONFIG, ...data }))
-      .catch(() => setConfig(DEFAULT_CONFIG));
+      .then((data: ClientConfig) => {
+        setConfig(prev => ({ ...prev, ...data }));
+      })
+      .catch(() => {});
   }, [apiUrl, clientId]);
  
   // ── Dark mode detection + watching ────────────────────────────────────────
